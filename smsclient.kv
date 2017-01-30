@@ -42,59 +42,11 @@
                     padding: 4
                     _input: message_input
                     MsgButton:
-                        text: 'Chats 1'
-                        _msg: "80,4% des femmes balance de plus de 45 ans ont un chat"
+                        text: 'A'
+                        _msg: "Example A"
                     MsgButton:
-                        text: 'Chats 2'
-                        _msg: "78,1% des personnes de plus de 55 ans ont un chat"
-                    MsgButton:
-                        text: 'Popu 1'
-                        _msg: "82,1% des hommes vierge trouvent les chats populaires"
-                    MsgButton:
-                        text: 'Popu 2'
-                        _msg: "95,2% des sagittaires de moins de 25 ans considèrent que les chats sont populaires"
-                    MsgButton:
-                        text: 'Danger 1'
-                        _msg: "82,3% des poissons trouvent les chats dangereux"
-                    MsgButton:
-                        text: 'Danger 2'
-                        _msg: "64,0% des personnes de plus de 45 ans trouvent les chats dangereux"
-                    MsgButton:
-                        text: 'Diable 1'
-                        _msg: "78,4% des vierges de plus de 55 ans considèrent que les chats noirs sont associés au diable"
-                    MsgButton:
-                        text: 'Diable 2'
-                        _msg: "De même, 66,6% des femmes de plus de 45 ans trouvent que les chats noirs sont associés au diable"
-                    MsgButton:
-                        text: 'Egypte 1'
-                        _msg: "83,4% des femmes bélier et des hommes verseau admettent que les chats sont apparus en Egypte antique"
-                    MsgButton:
-                        text: 'Egypte 2'
-                        _msg: "58,2% seulement des personnes de plus de 45 ans connaissent la date d'apparition du chat"
-                    MsgButton:
-                        text: 'Toxo 1'
-                        _msg: "91,0% des femmes balance de plus de 45 ans connaissent le mode opératoire de Toxoplasma Gondii"
-                    MsgButton:
-                        text: 'Toxo 2'
-                        _msg: "Au contraire, 59,0% des cancer de moins de 25 ans connaissent l'influence de la toxoplasmose"
-                    MsgButton:
-                        text: 'Lol 1'
-                        _msg: "prems"
-                    MsgButton:
-                        text: 'Lol Pq?'
-                        _msg: "Pourquoi t'affiche pas mes messages ?"
-                    MsgButton:
-                        text: 'Lol nul'
-                        _msg: "C pouri Jardiland on peu pa avoir une promo Zara ?"
-                    MsgButton:
-                        text: 'Lol Hartz'
-                        _msg: "<3 <3 <3 <3 <3 <3 <3 <3 "
-                    MsgButton:
-                        text: 'Lol catz'
-                        _msg: "^-.-^ ^-.-^ ^-.-^"
-                    MsgButton:
-                        text: 'Lol fin'
-                        _msg: "^-.-^ ^-.-^ ^-.-^ ^-.-^ ^-.-^ Fin de transmission. Pierre ^-.-^ ^-.-^ ^-.-^ ^-.-^ ^-.-^"
+                        text: 'B'
+                        _msg: "Example B"
                 BoxLayout:
                     orientation: 'horizontal'
                     size_hint: 1, .1
@@ -173,15 +125,9 @@
                 size_hint_y: None
                 height: self.texture_size[1]
             DoubleButton:
-                text: 'Vacances'
+                text: '1st SMS'
                 # 140 chars ############################################################################################################################################
-                _contents: "Envie de nature ?\nUn weekend pour 2 en chambre d'hote à gagner !\nTous les détails du concours sur www.goo.gl/sgdhx9", 'PierreEtVac'
-            DoubleButton:
-                text: 'Jardi'
-                _contents: "-30% sur le rayon animalerie jusqu'au 15 février ! Remise immédiate en caisse avec le code FELIX2017", 'Jardiland'
-            DoubleButton:
-                text: 'Sortie'
-                _contents: "Encore plus de vérité ? https://fair.to/BMoeL Ton numéro sera effacé après cet envoi. A bientot dans les internets...", 'Le Chat'
+                _contents: "Hello SMS world", 'Sender'
             TextInput:
                 id: sms_input
                 hint_text: 'Contenu du SMS'
@@ -241,35 +187,11 @@
                 size_hint_y: None
                 height: self.texture_size[1]
             DoubleButton:
-                text: 'Vous'
-                _contents: "Vous avez un chat", '60'
+                text: 'Poll A'
+                _contents: "Do you foo ?", '60'
             DoubleButton:
-                text: 'Popu'
-                _contents: "Les chats sont populaires", '50'
-            DoubleButton:
-                text: 'Danger'
-                _contents: "Les chats peuvent être dangereux", '50'
-            DoubleButton:
-                text: 'Diable'
-                _contents: "Les chats noirs sont associés au diable", '50'
-            DoubleButton:
-                text: 'Egypte'
-                _contents: "Les chats sont apparus subitement en Égypte antique", '50'
-            DoubleButton:
-                text: 'Toxo'
-                _contents: "La toxoplasmose peut changer les comportements humains", '50'
-            DoubleButton:
-                text: 'Lol 1'
-                _contents: "Vous aimez être caressé dans le sens du poil", '90'
-            DoubleButton:
-                text: 'Lol 2'
-                _contents: "Ce spectacle vous régale", '90'
-            DoubleButton:
-                text: 'Lol 3'
-                _contents: "Rien n'est vrai dans ce spectacle", '90'
-            DoubleButton:
-                text: 'Lol 4'
-                _contents: "Vous donnez votre langue au chat", '90'
+                text: 'Poll B'
+                _contents: "Bar is better than baz", '50'
             TextInput:
                 id: poll_input
                 hint_text: 'Titre du sondage'
