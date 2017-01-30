@@ -33,8 +33,6 @@ from re import fullmatch
 import aionotify
 import netifaces
 
-# Application
-from utils import CustomOscMessage
 
 logger = logging.getLogger(__name__)
 
@@ -238,27 +236,6 @@ class TCPPacketProtocol(asyncio.Protocol):
             header = len(packet).to_bytes(self._tcp_header_size, self._endianness)
             logger.debug('Sending packet over TCP to client: %r', packet)
             self._peer_transport.write(header + packet)
-
-class OSCStreamProtocol(TCPPacketProtocol):
-    def _handle_packet(self, dgram, timestamp):
-        try:
-            message = CustomOscMessage(dgram)
-        except Exception as e:
-            logger.error('Invalid OSC datagram received : %r', e)
-            return
-        handler_name = 'process_' + message.address.lstrip('/')
-        handler = getattr(self, handler_name, None)
-        if handler:
-            self._loop.call_soon(handler, message.params, timestamp)
-        else:
-            logger.error('Unknown handler for OSC address %r', message.address)
-            
-    def send_to_peer(self, *messages):
-        super().send_to_peer(*(m.dgram for m in messages))
-        
-    def request_peer(self, command, params):
-        msg = CustomOscMessage(command, params)
-        super().send_to_peer(msg.dgram)
 
 
 class PickleStreamProtocol(TCPPacketProtocol):
