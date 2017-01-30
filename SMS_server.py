@@ -130,7 +130,6 @@ class Server(daemons.PickleStreamProtocol):
         if vote_match:
             vote = bool(vote_match.group('vrai'))
             logger.debug('Got {} vote: "{}" from {}'.format(vote, content, filename))
-#            sms_data['type'] = utils.EventTypes.vote
             sms_data['type'] = utils.EventTypes.vrai if vote else utils.EventTypes.faux
             sms_data['data'] = 'VRAI' if vote else 'FAUX'
             if self._poll_running:
@@ -140,7 +139,6 @@ class Server(daemons.PickleStreamProtocol):
             logger.debug('Got Message in SMS: %r -> %r', filename, content)
             self._add_message(sms_data['phone'], content)
             sms_data['type'] = utils.EventTypes.message
-#            sms_data['data'] = index
             sms_data['data'] = content
         
         event = utils.Event(**sms_data)
@@ -307,5 +305,3 @@ if __name__ == '__main__':
 
     with Server(loop, config) as server:
         loop.run_forever()
-
-#    sys.exit()
