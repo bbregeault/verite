@@ -32,4 +32,3 @@ credits_url = https_url
 
     [[send_options]]
     datacoding = option(0, 8, 16)
-#    sender = string(max=11)
