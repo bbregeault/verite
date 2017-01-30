@@ -1,21 +1,5 @@
 #:kivy 1.9.1
 
-#<Widget>:
-#    canvas.after:
-#        Line:
-#            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-#            dash_offset: 5
-#            dash_length: 10
-        
-#<ScrollView>:
-#    canvas.before:
-#        Color:
-#            rgb: self._color #1, 0, 0
-#        Rectangle:
-#            pos: self.pos
-#            size: self.size
-
-
 <SMSClient>:
     available: _available
     displayed: _displayed
@@ -253,7 +237,6 @@
                 title_size: '28sp'
                 title_align: 'center'
                 content: PopupLayout
-#                on_open: print('POPUP !', self.parent)
                 BoxLayout:
                     id: PopupLayout
                     orientation: 'vertical'
@@ -363,7 +346,6 @@
         background_color: .9, .9, 0, 1
         on_press: app.root.set_pedigree(self.parent)
     SMSLabel:
-#        text: '00xxxxxxxx01xxxxxxxx02xxxxxxxx03xxxxxxxx04xxxxxxxx05xxxxxxxx06xxxxxxxx07xxxxxxxx08xxxxxxxx09xxxxxxxx10xxxxxxxx11xxxxxxxx12xxxxxxxx13xxxxxxxx'
         text: self.parent.content
         width: self.parent.width - self.parent.height*3
     SMSButton:
@@ -389,7 +371,6 @@
     size_hint_x: None
     text_size: self.size
     valign: 'top'
-#    max_lines: 1
             
 <SMSButton@Button>:
     background_normal: ''
