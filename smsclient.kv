@@ -161,36 +161,6 @@
             font_size: '22sp'
             text: root.sms_service_status
         StackLayout:
-            id: video_buttons
-            size_hint_y: None
-            height: self.minimum_height
-            padding: 6
-            spacing: 10
-#            Remove if necessary
-            on_parent: if self.parent is not None: self.parent.remove_widget(self)
-            Label:
-                text: 'VIDEOS'
-                font_size: '22sp'
-                size_hint_y: None
-                height: self.texture_size[1]
-            ToggleButton:
-                text: '1'
-                _video: int(self.text)
-                on_state: root.toggle_video(self)
-            ToggleButton:
-                text: '2'
-                _video: int(self.text)
-                on_state: root.toggle_video(self)
-            ToggleButton:
-                text: '3'
-                _video: int(self.text)
-                on_state: root.toggle_video(self)
-            Button:
-                size_hint: .72, None
-                height: 35
-                text: 'Arrêter toutes les vidéos'
-                on_press: root.stop_all_videos(video_buttons.children)
-        StackLayout:
             size_hint_y: None
             height: self.minimum_height
             padding: 6
