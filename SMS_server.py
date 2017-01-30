@@ -85,7 +85,6 @@ class Server(daemons.PickleStreamProtocol):
         # Temporary poll & video tasks
         self._poll = None
         self._poll_running = False
-        self._video_loops = {}
         
     @asyncio.coroutine
     def setup(self):
@@ -224,29 +223,6 @@ class Server(daemons.PickleStreamProtocol):
 
         logger.debug('DISPLAYING Messages: %r', payload)
                 
-#    def process_topVideo(self, payload, timestamp):
-#    def process_reponses(self, payload, timestamp):
-#    def process_rig(self, payload, timestamp):
-
-    def process_stopVideo(self, payload, timestamp):
-        video_index = payload[0]
-        task = self._video_loops.pop(video_index, None)
-        if task:
-            task.cancel()
-        
-    def process_loopVideo(self, payload, timestamp):
-        video_index = payload[0]
-        if video_index not in self._video_loops:
-            task = self._loop.create_task(self._loop_video(video_index))
-            self._video_loops[video_index] = task
-        
-    @asyncio.coroutine
-    def _loop_video(self, video_index):
-        msg = utils.CustomOscMessage('/topVideo', video_index)
-        while True:
-            self.send_to_display(msg)
-            yield from asyncio.sleep(0.5)
-        
     def process_sondage(self, payload, timestamp):
         titre, chrono = payload
 

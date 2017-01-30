@@ -212,17 +212,6 @@ class SMSClient(BoxLayout):
         self.send_osc('/finsondage')
         logger.debug('FIN SONDAGE')
         
-    def toggle_video(self, togglebutton):
-        if togglebutton.state == 'down':
-            self.send_osc('/loopVideo', [togglebutton._video])
-        else:
-            self.send_osc('/stopVideo', [togglebutton._video])
-            
-    def stop_all_videos(self, videobuttons):
-        for toggle in videobuttons:
-            if isinstance(toggle, ToggleButton):
-                toggle.state = 'normal'
-            
     def send_sms(self, popup, sender_input, sms_input):
         sender = sender_input.text
         content = sms_input.text
