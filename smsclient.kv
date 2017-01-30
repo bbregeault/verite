@@ -1,0 +1,434 @@
+#:kivy 1.9.1
+
+#<Widget>:
+#    canvas.after:
+#        Line:
+#            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+#            dash_offset: 5
+#            dash_length: 10
+        
+#<ScrollView>:
+#    canvas.before:
+#        Color:
+#            rgb: self._color #1, 0, 0
+#        Rectangle:
+#            pos: self.pos
+#            size: self.size
+
+
+<SMSClient>:
+    available: _available
+    displayed: _displayed
+    timeline_view: _timeline_view
+    phonebook_view: _phonebook_view
+    # kv ids are only weakrefs. Store a direct reference to avoid garbage collection when popup is not displayed
+    popup: popup.__self__
+    
+    orientation: 'horizontal'
+    TabbedPanel:
+        do_default_tab: False
+        tab_width: 300
+        TabbedPanelItem:
+            text: 'Messages'
+            BoxLayout:
+                orientation: 'vertical'
+                GridLayout:
+                    cols: 2
+#                    rows_minimum: {0: 30}
+                    Label:
+                        text: 'Messages Reçus'
+                        size_hint_y: None
+                        font_size: '22sp'
+                    Label:
+                        text: 'Messages Affichés'
+                        size_hint_y: None
+                        font_size: '22sp'
+                    ScrollView:
+                        ScrollStack:
+                            id: _available
+                            _orientation: 'lr-tb'
+                    ScrollView:
+                        ScrollStack:
+                            id: _displayed
+                            _orientation: 'rl-tb'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1, .05
+                    spacing: 4
+                    padding: 4
+                    _input: message_input
+                    MsgButton:
+                        text: 'Chats 1'
+                        _msg: "80,4% des femmes balance de plus de 45 ans ont un chat"
+                    MsgButton:
+                        text: 'Chats 2'
+                        _msg: "78,1% des personnes de plus de 55 ans ont un chat"
+                    MsgButton:
+                        text: 'Popu 1'
+                        _msg: "82,1% des hommes vierge trouvent les chats populaires"
+                    MsgButton:
+                        text: 'Popu 2'
+                        _msg: "95,2% des sagittaires de moins de 25 ans considèrent que les chats sont populaires"
+                    MsgButton:
+                        text: 'Danger 1'
+                        _msg: "82,3% des poissons trouvent les chats dangereux"
+                    MsgButton:
+                        text: 'Danger 2'
+                        _msg: "64,0% des personnes de plus de 45 ans trouvent les chats dangereux"
+                    MsgButton:
+                        text: 'Diable 1'
+                        _msg: "78,4% des vierges de plus de 55 ans considèrent que les chats noirs sont associés au diable"
+                    MsgButton:
+                        text: 'Diable 2'
+                        _msg: "De même, 66,6% des femmes de plus de 45 ans trouvent que les chats noirs sont associés au diable"
+                    MsgButton:
+                        text: 'Egypte 1'
+                        _msg: "83,4% des femmes bélier et des hommes verseau admettent que les chats sont apparus en Egypte antique"
+                    MsgButton:
+                        text: 'Egypte 2'
+                        _msg: "58,2% seulement des personnes de plus de 45 ans connaissent la date d'apparition du chat"
+                    MsgButton:
+                        text: 'Toxo 1'
+                        _msg: "91,0% des femmes balance de plus de 45 ans connaissent le mode opératoire de Toxoplasma Gondii"
+                    MsgButton:
+                        text: 'Toxo 2'
+                        _msg: "Au contraire, 59,0% des cancer de moins de 25 ans connaissent l'influence de la toxoplasmose"
+                    MsgButton:
+                        text: 'Lol 1'
+                        _msg: "prems"
+                    MsgButton:
+                        text: 'Lol Pq?'
+                        _msg: "Pourquoi t'affiche pas mes messages ?"
+                    MsgButton:
+                        text: 'Lol nul'
+                        _msg: "C pouri Jardiland on peu pa avoir une promo Zara ?"
+                    MsgButton:
+                        text: 'Lol Hartz'
+                        _msg: "<3 <3 <3 <3 <3 <3 <3 <3 "
+                    MsgButton:
+                        text: 'Lol catz'
+                        _msg: "^-.-^ ^-.-^ ^-.-^"
+                    MsgButton:
+                        text: 'Lol fin'
+                        _msg: "^-.-^ ^-.-^ ^-.-^ ^-.-^ ^-.-^ Fin de transmission. Pierre ^-.-^ ^-.-^ ^-.-^ ^-.-^ ^-.-^"
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1, .1
+                    spacing: 10
+                    padding: 0, 0, 10, 0
+                    TextInput:
+                        id: message_input
+                        font_size: '18sp'
+                        hint_text: 'Nouveau message'
+                    Button:
+                        size_hint: .15, .7
+                        pos_hint: {'center_y': .5}
+                        text: 'Nouveau\nMessage'
+                        on_press: root.create_message(message_input)
+                    Button:
+                        size_hint: .2, .7
+                        pos_hint: {'center_y': .5}
+                        text: "Changer\nl'affichage"
+                        on_press: root.set_displayed()
+                    
+        TabbedPanelItem:
+            text: 'Timeline'
+            GridLayout:
+                cols: 2
+                rows_minimum: {0: 20}
+                Label:
+                    size_hint_y: None
+                    font_size: '22sp'
+                    text: 'Evénements: ' + str(len(root.timeline))
+                Label:
+                    size_hint_y: None
+                    font_size: '22sp'
+                    text: 'Votants: ' + str(len(root.phonebook))
+                ScrollView:
+                    ScrollStack:
+                        id: _timeline_view
+                ScrollView:
+                    ScrollStack:
+                        id: _phonebook_view
+    BoxLayout:
+        size_hint_x: .3
+        orientation: 'vertical'
+#        spacing: 6
+        Label:
+            canvas.before:
+                Color:
+                    rgb: (.2, .6, .1) if root.connected else (.8, .2, .1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_y: None
+            height: 60
+            font_size: '22sp'
+            text: root.connection_status
+        Label:
+            canvas.before:
+                Color:
+                    rgb: (.2, .6, .1) if root.sms_service_connected else (.8, .2, .1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_y: None
+            height: 60
+            font_size: '22sp'
+            text: root.sms_service_status
+        StackLayout:
+            id: video_buttons
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 6
+            spacing: 10
+#            Remove if necessary
+            on_parent: if self.parent is not None: self.parent.remove_widget(self)
+            Label:
+                text: 'VIDEOS'
+                font_size: '22sp'
+                size_hint_y: None
+                height: self.texture_size[1]
+            ToggleButton:
+                text: '1'
+                _video: int(self.text)
+                on_state: root.toggle_video(self)
+            ToggleButton:
+                text: '2'
+                _video: int(self.text)
+                on_state: root.toggle_video(self)
+            ToggleButton:
+                text: '3'
+                _video: int(self.text)
+                on_state: root.toggle_video(self)
+            Button:
+                size_hint: .72, None
+                height: 35
+                text: 'Arrêter toutes les vidéos'
+                on_press: root.stop_all_videos(video_buttons.children)
+        StackLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 6
+            spacing: 6
+            _inputs: sms_input, sender_input
+            Label:
+                text: 'ENVOYER UN SMS'
+                font_size: '22sp'
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+            DoubleButton:
+                text: 'Vacances'
+                # 140 chars ############################################################################################################################################
+                _contents: "Envie de nature ?\nUn weekend pour 2 en chambre d'hote à gagner !\nTous les détails du concours sur www.goo.gl/sgdhx9", 'PierreEtVac'
+            DoubleButton:
+                text: 'Jardi'
+                _contents: "-30% sur le rayon animalerie jusqu'au 15 février ! Remise immédiate en caisse avec le code FELIX2017", 'Jardiland'
+            DoubleButton:
+                text: 'Sortie'
+                _contents: "Encore plus de vérité ? https://fair.to/BMoeL Ton numéro sera effacé après cet envoi. A bientot dans les internets...", 'Le Chat'
+            TextInput:
+                id: sms_input
+                hint_text: 'Contenu du SMS'
+                size_hint: 1, None
+                height: 80
+                font_size: '18sp'
+            TextInput:
+                id: sender_input
+                hint_text: 'Expéditeur'
+                size_hint: .7, None
+                height: 40
+                font_size: '18sp'
+            Button:
+                text: 'Envoyer !'
+                size_hint: .3, None
+                height: 40
+                on_release: if sms_input.text: popup.open()
+            Popup:
+                id: popup
+                size_hint: .5, .5
+                on_parent: if self.parent is not None: self.parent.remove_widget(self)
+                title: 'Envoyer SMS ?'
+                title_size: '28sp'
+                title_align: 'center'
+                content: PopupLayout
+#                on_open: print('POPUP !', self.parent)
+                BoxLayout:
+                    id: PopupLayout
+                    orientation: 'vertical'
+                    Label:
+                        text: 'Expéditeur :   ' + sender_input.text
+                        font_size: '22sp'
+                        size_hint_y: .6
+                    Label:
+                        text: sms_input.text
+                        font_size: '18sp'
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: .2
+                        Button:
+                            text: 'ENVOYER !'
+                            font_size: '22sp'
+                            on_release: root.send_sms(popup, sender_input, sms_input)
+                        Button:
+                            text: 'Annuler'
+                            font_size: '22sp'
+                            on_release: popup.dismiss()
+        StackLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 6
+            spacing: 4
+            _inputs: poll_input, chrono_input
+            Label:
+                text: 'SONDAGES'
+                font_size: '22sp'
+                halign: 'center'
+                size_hint_y: None
+                height: self.texture_size[1]
+            DoubleButton:
+                text: 'Vous'
+                _contents: "Vous avez un chat", '60'
+            DoubleButton:
+                text: 'Popu'
+                _contents: "Les chats sont populaires", '50'
+            DoubleButton:
+                text: 'Danger'
+                _contents: "Les chats peuvent être dangereux", '50'
+            DoubleButton:
+                text: 'Diable'
+                _contents: "Les chats noirs sont associés au diable", '50'
+            DoubleButton:
+                text: 'Egypte'
+                _contents: "Les chats sont apparus subitement en Égypte antique", '50'
+            DoubleButton:
+                text: 'Toxo'
+                _contents: "La toxoplasmose peut changer les comportements humains", '50'
+            DoubleButton:
+                text: 'Lol 1'
+                _contents: "Vous aimez être caressé dans le sens du poil", '90'
+            DoubleButton:
+                text: 'Lol 2'
+                _contents: "Ce spectacle vous régale", '90'
+            DoubleButton:
+                text: 'Lol 3'
+                _contents: "Rien n'est vrai dans ce spectacle", '90'
+            DoubleButton:
+                text: 'Lol 4'
+                _contents: "Vous donnez votre langue au chat", '90'
+            TextInput:
+                id: poll_input
+                hint_text: 'Titre du sondage'
+                size_hint: .8, None
+                height: 80
+                font_size: '18sp'
+                write_tab: False
+            TextInput:
+                id: chrono_input
+                text: '60'
+                hint_text: 'Durée en secondes'
+                size_hint: .18, None
+                height: 40
+                font_size: '18sp'
+                input_filter: 'float'
+            Button:
+                text: 'Stop'
+                size_hint: .2, None
+                height: 50
+                on_press: root.stop_poll()
+            Button:
+                text: 'Start'
+                size_hint: .8, None
+                height: 50
+                on_press: root.start_poll(poll_input, chrono_input)
+                
+        ScrollView:
+            ScrollStack:
+            
+
+<SMS>:
+    canvas:
+        Color:
+            rgb: [.5, 0, 0] if self.displayed else [0, .5, .2]
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: 'lr-tb' if self.parent is None else self.parent._orientation
+    size_hint_y: None
+    height: 50
+    padding: 5
+    spacing: 5 
+    SMSButton:
+        background_color: .9, .9, 0, 1
+        on_press: app.root.set_pedigree(self.parent)
+    SMSLabel:
+#        text: '00xxxxxxxx01xxxxxxxx02xxxxxxxx03xxxxxxxx04xxxxxxxx05xxxxxxxx06xxxxxxxx07xxxxxxxx08xxxxxxxx09xxxxxxxx10xxxxxxxx11xxxxxxxx12xxxxxxxx13xxxxxxxx'
+        text: self.parent.content
+        width: self.parent.width - self.parent.height*3
+    SMSButton:
+        background_color: .7, 0, 0, 1
+        on_press: app.root.delete_message(self.parent)
+    SMSButton:
+        background_color: 0, .7, 0, 1
+        on_press: app.root.change_column(self.parent)
+    
+<Tooltip>:
+    size_hint:None, None
+    size: self.texture_size[0]+5, self.texture_size[1]+5
+    canvas.before:
+        Color:
+            rgb: .2, .2, .2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<SMSLabel@Label+TooltipBehavior>:
+    _tooltip: self.text
+    font_size: '16sp'
+    size_hint_x: None
+    text_size: self.size
+    valign: 'top'
+#    max_lines: 1
+            
+<SMSButton@Button>:
+    background_normal: ''
+    size_hint_x: None
+    width: self.height
+
+<MsgButton@Button>:
+    on_release:self.parent._input.text = self._msg
+    
+<ToggleButton>:
+    size_hint: None, None
+    size: 35, 35
+    
+<DoubleButton@Button>:
+    size_hint: 1/5.1, None
+    height: 35
+    on_release: self.parent._inputs[0].text = self._contents[0]; self.parent._inputs[1].text = self._contents[1]
+
+<ScrollStack@StackLayout>:
+    size_hint_y: None
+    height: self.minimum_height
+                
+<EventWidget, Voter>:
+    font_size: '18sp'
+    size_hint_y: None
+    height: self.texture_size[1]
+    text_size: self.width, None
+    valign: 'top'
+    canvas.before:
+        Color:
+            rgb: self.color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgb: 1, 1, 1
+
+<Voter>:
+    canvas.before:
+        Color:
+            rgb: (1, 1, 1) if self.enabled else (.6, .6, .6)
+    text: self.phone + '    ' + self.pedigree
